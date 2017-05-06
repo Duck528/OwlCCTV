@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="btn_circle_fill">#FFFFFF</color>
+    <color name="btn_circle_border">#000000</color>
+    <color name="appBackground">#EEEEEE</color>
+    <color name="txt">#000000</color>
+    <color name="btn_circle_filled">#009688</color>
+    <color name="cctv_toast_color">#FFFFFF</color>
+    <color name="recordedBackground">#D8D8D8</color>
+</resources>

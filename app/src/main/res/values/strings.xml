@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">OwlCCTV</string>
+    <string name="btn_cctv_desc">CCTV</string>
+    <string name="tv_cctv">CCTV</string>
+    <string name="tv_video">녹화된 영상</string>
+    <string name="tv_setting">환경설정</string>
+    <string name="tv_exit">종료</string>
+    <string name="tv_auth">생성한 인증번호를 입력해 주세요</string>
+    <string name="btn_send_auth">Send</string>
+    <string name="txt_recorded_main">녹화된 비디오</string>
+</resources>

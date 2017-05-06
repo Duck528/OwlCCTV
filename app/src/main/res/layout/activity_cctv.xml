@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="model"
+            type="com.duck.owlcctv.viewmodel.CCTVViewModel"/>
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:opencv="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.duck.owlcctv.activity.CCTVActivity"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:background="@color/appBackground"
+        android:layout_width="match_parent">
+
+        <org.opencv.android.JavaCameraView
+            android:id="@+id/surfaceView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@null"
+            android:layout_weight="0.05"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" >
+            <RelativeLayout
+                android:background="@drawable/bottom_border"
+                android:layout_width="28dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/ivNetStat"
+                    android:rotation="270"
+                    android:src="@drawable/net_off"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="30dp"
+                    android:textSize="12sp"
+                    android:padding="4dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <com.duck.owlcctv.util.VerticalTextView
+                    android:layout_centerVertical="true"
+                    android:text="@{model.cctvStatus}"
+                    android:textSize="12sp"
+                    android:padding="4dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_weight="0.15"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:onClick="@{() -> model.toggleOnSaveEnergy()}"
+                android:id="@+id/btnSaveEnergy"
+                android:layout_centerHorizontal="true"
+                android:rotation="270"
+                android:src="@drawable/energy_saving"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/circle_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <Button
+                android:id="@+id/btnStartCam"
+                android:onClick="@{() -> model.startOrStopCCTV()}"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/red_circle"
+                android:layout_width="60dp"
+                android:layout_height="60dp"/>
+            <ImageButton
+                android:onClick="@{() -> model.navToRecordList()}"
+                android:rotation="270"
+                android:src="@drawable/list"
+                android:layout_marginBottom="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@null"
+                android:layout_width="60dp"
+                android:layout_height="60dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+</layout>
+

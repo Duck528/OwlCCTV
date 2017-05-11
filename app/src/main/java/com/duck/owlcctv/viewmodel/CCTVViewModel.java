@@ -27,7 +27,10 @@ import com.duck.owlcctv.R;
 import com.duck.owlcctv.activity.RecordedAvtivity;
 import com.duck.owlcctv.util.OwlSettings;
 import com.duck.owlcctv.util.VerticalTextView;
-import com.duck.owlcctv.util.VideoConverter;
+import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
+import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
+import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
+import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -36,7 +39,6 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
-import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
@@ -47,6 +49,8 @@ import org.opencv.videoio.VideoWriter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class CCTVViewModel implements BaseViewModel, CameraBridgeViewBase.CvCameraViewListener2 {
     public final ObservableField<String> cctvStatus = new ObservableField<>();
@@ -65,6 +69,12 @@ public class CCTVViewModel implements BaseViewModel, CameraBridgeViewBase.CvCame
     // 사용자가 설정하도록 만든다
     private int counterFrame = FRAME_COUNT;
     private BroadcastReceiver netConnReceiver = null;
+    // 동영상 변환을 위한 FFmpeg
+    private FFmpeg ffmpeg = null;
+    // 순차적인 동영상 변환에 사용할 작업 큐
+    private Queue<String> taskQueue = new ArrayBlockingQueue<>(30);
+
+    private boolean stopWorker = false;
 
     private BaseLoaderCallback loaderCallback = new BaseLoaderCallback(activity) {
         @Override
@@ -139,6 +149,7 @@ public class CCTVViewModel implements BaseViewModel, CameraBridgeViewBase.CvCame
                     // 움직임이 감지가 되면 특정 구간동안 프레임을 저장하여 동영상을 만든다
                     if (size > sensitivity) {
                         /*
+                        여기 아래 코드는 검출된 움직임을 표시해주는 부분
                         Rect r = Imgproc.boundingRect(c);
                         Imgproc.rectangle(in, new Point(r.x, r.y),
                                 new Point(r.x + r.width, r.y + r.height), new Scalar(255, 10, 10));
@@ -186,6 +197,7 @@ public class CCTVViewModel implements BaseViewModel, CameraBridgeViewBase.CvCame
                 videoWriter = new VideoWriter();
                 String fileName = File.createTempFile("[owlcctv]", ".avi").getName();
                 file = new File(OwlSettings.saveDir, fileName);
+                // 여기 아래에서 Index out of range exception이 발생할 수 있을까?
                 Mat frame = frames.get(0);
                 Size size = frame.size();
                 videoWriter.open(file.getPath(), VideoWriter.fourcc('M', 'J', 'P', 'G'), FPS, size);
@@ -193,7 +205,6 @@ public class CCTVViewModel implements BaseViewModel, CameraBridgeViewBase.CvCame
                     videoWriter.write(f);
                 }
             } catch (Exception e) {
-                Log.d(TAG, e.getMessage());
                 e.printStackTrace();
             } finally {
                 // 동영상 저장이 마무리되면 저장한 프레임의 메모리를 해제한다
@@ -205,9 +216,9 @@ public class CCTVViewModel implements BaseViewModel, CameraBridgeViewBase.CvCame
                     videoWriter.release();
             }
             if (file != null) {
-                String mp4Path = file.getPath().replace(".avi", ".mp4");
-                VideoConverter.fromAviToMp4(activity, file.getPath(), mp4Path);
-                return mp4Path;
+                // 수정됨
+                taskQueue.add(file.getPath());
+                return file.getParent();
             } else {
                 return null;
             }
@@ -452,6 +463,90 @@ public class CCTVViewModel implements BaseViewModel, CameraBridgeViewBase.CvCame
         camView = (CameraBridgeViewBase) activity.findViewById(R.id.surfaceView);
         camView.setVisibility(SurfaceView.VISIBLE);
         camView.setCvCameraViewListener(this);
+        // FFmpeg 설정
+        this.ffmpeg = FFmpeg.getInstance(this.activity);
+        try {
+            this.ffmpeg.loadBinary(new LoadBinaryResponseHandler() {
+                @Override
+                public void onFailure() {
+                    super.onFailure();
+                }
+
+                @Override
+                public void onSuccess() {
+                    super.onSuccess();
+                }
+
+                @Override
+                public void onStart() {
+                    super.onStart();
+                }
+
+                @Override
+                public void onFinish() {
+                    super.onFinish();
+                }
+            });
+        } catch (FFmpegNotSupportedException e) {
+            e.printStackTrace();
+        }
+        // 동영상 변환 스레드 생성 및 실행
+        Thread worker = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!stopWorker) {
+                    try {
+                        // 태스크가 큐에 존재하고,
+                        if (taskQueue.size() != 0) {
+                            // FFmpeg 커맨드가 실행중이지 않는다면 동영상 변환을 실행하라
+                            if (!ffmpeg.isFFmpegCommandRunning()) {
+                                final String inPath = taskQueue.poll();
+                                final String outPath = inPath.replace(".avi", ".mp4");
+                                final String[] commands = {"-y", "-i", inPath, outPath};
+                                Log.d(TAG, inPath + " task entered");
+                                ffmpeg.execute(commands, new ExecuteBinaryResponseHandler() {
+                                    @Override
+                                    public void onSuccess(String message) {
+                                        super.onSuccess(message);
+                                    }
+
+                                    @Override
+                                    public void onProgress(String message) {
+                                        super.onProgress(message);
+                                    }
+
+                                    @Override
+                                    public void onFailure(String message) {
+                                        super.onFailure(message);
+                                    }
+
+                                    @Override
+                                    public void onStart() {
+                                        super.onStart();
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+                                        // 원본 파일을 삭제한다
+                                        super.onFinish();
+                                        File f = new File(inPath);
+                                        if (!f.delete()) {
+                                            Log.d(TAG, "file is not deleted");
+                                        }
+                                    }
+                                });
+                            }
+                        } else {
+                            Thread.sleep(1000);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        worker.start();
         Log.d(TAG, "onCreate Finished");
     }
 
@@ -485,7 +580,9 @@ public class CCTVViewModel implements BaseViewModel, CameraBridgeViewBase.CvCame
     }
 
     @Override
-    public void onDestroy() { }
+    public void onDestroy() {
+        stopWorker = true;
+    }
 
     @Override
     public void onCameraViewStarted(int width, int height) {

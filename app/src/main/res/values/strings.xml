@@ -8,4 +8,20 @@
     <string name="tv_auth">생성한 인증번호를 입력해 주세요</string>
     <string name="btn_send_auth">Send</string>
     <string name="txt_recorded_main">녹화된 비디오</string>
+
+    <string name="settings_allow_auto_upload">자동 업로드 기능을 설정합니다</string>
+    <string name="settings_disallow_auto_upload">자동 업로드 기능을 사용하지 않습니다</string>
+    <string name="settings_auto_upload_title">자동 업로드 설정</string>
+    <string name="settings_delete_after_upload_title">업로드 후 삭제</string>
+    <string name="settings_delete_after_upload_summary">업로드가 끝나면 녹화된 파일을 삭제합니다</string>
+
+    <string name="settings_info_app">애플리케이션 정보</string>
+    <string name="settings_info_dev_title">개발자 정보</string>
+    <string name="settings_info_dev_summary">탭하여 개발자 정보를 확인합니다</string>
+    <string name="settings_mail_dev_title">메일 보내기</string>
+    <string name="settings_mail_dev_summary">개발자에게 메일을 전송합니다</string>
+
+    <string name="settings_auth_app_title">인증</string>
+    <string name="settings_auth_app_checked">인증되었습니다</string>
+    <string name="settings_auth_app_unchecked">인증되지 않았습니다</string>
 </resources>

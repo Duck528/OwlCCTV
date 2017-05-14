@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.duck.owlcctv.R;
 import com.duck.owlcctv.activity.CCTVActivity;
 import com.duck.owlcctv.activity.RecordedAvtivity;
+import com.duck.owlcctv.activity.SettingsActivity;
 import com.duck.owlcctv.model.Recorded;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.FFmpegLoadBinaryResponseHandler;
@@ -78,6 +79,8 @@ public class MenuViewModel implements BaseViewModel {
             @Override
             public void onAnimationEnd(Animation animation) {
                 // 해당 페이지로 이동한다
+                Intent intent = new Intent(activity, SettingsActivity.class);
+                activity.startActivity(intent);
                 Log.d(TAG, "navToRecorded Fired");
             }
 

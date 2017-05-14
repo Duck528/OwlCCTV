@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/settings_auto_upload_title">
+        <SwitchPreference
+            android:key="autoUpload"
+            android:defaultValue="false"
+            android:summaryOff="@string/settings_disallow_auto_upload"
+            android:summaryOn="@string/settings_allow_auto_upload"
+            android:switchTextOff="OFF"
+            android:switchTextOn="ON"
+            android:title="@string/settings_auto_upload_title"/>
+        <CheckBoxPreference
+            android:key="cbxDeleteAfterUpload"
+            android:defaultValue="false"
+            android:dependency="autoUpload"
+            android:title="@string/settings_delete_after_upload_title"
+            android:summary="@string/settings_delete_after_upload_summary"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_auth_app_title">
+        <Preference
+            android:title="@string/settings_auth_app_title"
+            android:summary="@string/settings_auth_app_unchecked">
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_info_app">
+        <Preference
+            android:title="@string/settings_info_dev_title"
+            android:summary="@string/settings_info_dev_summary">
+        </Preference>
+        <Preference
+            android:title="@string/settings_mail_dev_title"
+            android:summary="@string/settings_mail_dev_summary">
+            <intent
+                android:action="android.intent.action.SENDTO"
+                android:data="mailto:dhanh0528@gmail.com"/>
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

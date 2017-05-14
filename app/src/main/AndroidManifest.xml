@@ -41,6 +41,7 @@
         <activity android:name=".activity.CCTVActivity"
             android:screenOrientation="landscape"
             android:configChanges="keyboardHidden|orientation"/>
+        <activity android:name=".activity.SettingsActivity"/>
     </application>
 
 </manifest>

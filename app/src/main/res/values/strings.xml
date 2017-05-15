@@ -9,6 +9,11 @@
     <string name="btn_send_auth">Send</string>
     <string name="txt_recorded_main">녹화된 비디오</string>
 
+    <string name="activity_auth_login_summary">아이디와 패스워드를 입력해 주세요</string>
+    <string name="activity_auth_login_id_hint">아이디를 입력해 주세요</string>
+    <string name="activity_auth_login_pw_hint">패스워드를 입력해 주세요</string>
+    <string name="activity_auth_login_btn_contents">로그인</string>
+
     <string name="settings_allow_auto_upload">자동 업로드 기능을 설정합니다</string>
     <string name="settings_disallow_auto_upload">자동 업로드 기능을 사용하지 않습니다</string>
     <string name="settings_auto_upload_title">자동 업로드 설정</string>

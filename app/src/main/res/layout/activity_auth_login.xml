@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.duck.owlcctv.viewmodel.AuthLoginViewModel"/>
+    </data>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvSummary"
+                android:text="@string/activity_auth_login_summary"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/etxtId"
+                android:text="@{viewModel.userId}"
+                android:layout_marginTop="10sp"
+                android:layout_marginStart="15sp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginEnd="15sp"
+                android:layout_marginRight="15sp"
+                android:hint="@string/activity_auth_login_id_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/etxtPw"
+                android:text="@{viewModel.userPw}"
+                android:layout_marginStart="15sp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginEnd="15sp"
+                android:layout_marginRight="15sp"
+                android:hint="@string/activity_auth_login_id_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:text="@string/activity_auth_login_btn_contents"
+                android:onClick="@{() -> viewModel.doLogin()}"
+                android:layout_marginTop="20sp"
+                android:layout_marginStart="15sp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginEnd="15sp"
+                android:layout_marginRight="15sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

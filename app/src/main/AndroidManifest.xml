@@ -34,6 +34,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.AuthLoginActivity">
+            <intent-filter>
+                <action android:name="com.duck.owlcctv.activity.AuthLoginActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.RecordedAvtivity"/>
         <activity android:name=".activity.VideoViewActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -43,5 +49,4 @@
             android:configChanges="keyboardHidden|orientation"/>
         <activity android:name=".activity.SettingsActivity"/>
     </application>
-
 </manifest>

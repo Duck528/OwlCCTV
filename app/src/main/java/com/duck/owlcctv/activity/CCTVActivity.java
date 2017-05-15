@@ -12,7 +12,7 @@ import com.duck.owlcctv.viewmodel.CCTVViewModel;
 
 public class CCTVActivity extends AppCompatActivity {
     private static final String TAG = "[CCTVActivity]";
-    private CCTVViewModel model = new CCTVViewModel(this);
+    private final CCTVViewModel model = new CCTVViewModel(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="70dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
@@ -25,6 +25,7 @@
             <EditText
                 android:id="@+id/etxtId"
                 android:text="@{viewModel.userId}"
+                android:textAlignment="center"
                 android:layout_marginTop="10sp"
                 android:layout_marginStart="15sp"
                 android:layout_marginLeft="15sp"
@@ -36,6 +37,7 @@
             <EditText
                 android:id="@+id/etxtPw"
                 android:inputType="textPassword"
+                android:textAlignment="center"
                 android:text="@{viewModel.userPw}"
                 android:layout_marginStart="15sp"
                 android:layout_marginLeft="15sp"
@@ -47,7 +49,7 @@
             <Button
                 android:text="@string/activity_auth_login_btn_contents"
                 android:onClick="@{() -> viewModel.doLogin()}"
-                android:layout_marginTop="20sp"
+                android:layout_marginTop="15sp"
                 android:layout_marginStart="15sp"
                 android:layout_marginLeft="15sp"
                 android:layout_marginEnd="15sp"

@@ -23,6 +23,7 @@ public class AuthCodeViewModel implements BaseViewModel {
         // 일단은 메뉴로 이동한다
         Intent intent = new Intent(this.activity, MenuActivity.class);
         this.activity.startActivity(intent);
+        this.activity.finish();
     }
 
     @Override

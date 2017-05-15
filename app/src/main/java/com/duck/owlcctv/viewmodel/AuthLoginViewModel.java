@@ -24,6 +24,7 @@ public class AuthLoginViewModel implements BaseViewModel {
         // 로컬에 저장된 데이터는 나중에 다시 로그인하지 않도록 하기위해 사용된다
         Intent intent = new Intent(this.activity, AuthCodeActivity.class);
         this.activity.startActivity(intent);
+        this.activity.finish();
     }
 
     @Override

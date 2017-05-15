@@ -35,12 +35,13 @@
                 android:layout_height="wrap_content" />
             <EditText
                 android:id="@+id/etxtPw"
+                android:inputType="textPassword"
                 android:text="@{viewModel.userPw}"
                 android:layout_marginStart="15sp"
                 android:layout_marginLeft="15sp"
                 android:layout_marginEnd="15sp"
                 android:layout_marginRight="15sp"
-                android:hint="@string/activity_auth_login_id_hint"
+                android:hint="@string/activity_auth_login_pw_hint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <Button

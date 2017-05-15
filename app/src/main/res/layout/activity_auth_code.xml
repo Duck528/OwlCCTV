@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.duck.owlcctv.viewmodel.AuthCodeViewModel"/>
+    </data>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/activity_auth_code_summary"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:maxLength="4"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content" />
+                <Button
+                    android:onClick="@{() -> viewModel.doAuth()}"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginStart="10sp"
+                    android:text="@string/activity_auth_code_btn_contents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

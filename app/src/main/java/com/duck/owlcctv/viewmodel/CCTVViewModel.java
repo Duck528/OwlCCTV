@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -533,6 +536,10 @@ public class CCTVViewModel implements BaseViewModel, CameraBridgeViewBase.CvCame
                                         if (!f.delete()) {
                                             Log.d(TAG, "file is not deleted");
                                         }
+                                        // 썸네일 이미지를 생성하여 로컬에 저장한다
+                                        Bitmap thumbnail = ThumbnailUtils.createVideoThumbnail(
+                                                outPath,
+                                                MediaStore.Images.Thumbnails.MICRO_KIND);
                                     }
                                 });
                             }

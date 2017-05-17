@@ -25,8 +25,11 @@ import com.duck.owlcctv.util.FileUtil;
 import com.duck.owlcctv.util.OwlSettings;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -60,6 +63,24 @@ public class RecordedViewModel implements BaseViewModel {
                 recordeds.add(r);
             }
         }
+
+        /*
+            이슈 - 녹화된 영상을 시간순으로 정렬 이슈 해결
+         */
+        Collections.sort(recordeds, new Comparator<Recorded>() {
+            @Override
+            public int compare(Recorded r1, Recorded r2) {
+                SimpleDateFormat d = new SimpleDateFormat("yyyy. MM. yy. HH:mm", Locale.KOREA);
+                try {
+                    Date d1 = d.parse(r1.getLastModified());
+                    Date d2 = d.parse(r2.getLastModified());
+                    return d1.compareTo(d2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return 0;
+                }
+            }
+        });
 
         final ListView listView = (ListView)activity.findViewById(R.id.lvRecorded);
         RecordedArrayAdapter adapter = new RecordedArrayAdapter(recordeds);
@@ -165,7 +186,11 @@ public class RecordedViewModel implements BaseViewModel {
         for (int i=0, len=listView.getCount(); i<len; i++) {
             View v = listView.getChildAt(i);
             CheckBox checkBox = (CheckBox)v.findViewById(R.id.cbxSelected);
-            checkBox.performClick();
+            /*
+                녹화된 비디오 전체선택 이슈 해결
+             */
+            if (!checkBox.isChecked())
+                checkBox.performClick();
         }
     }
 

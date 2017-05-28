@@ -2,7 +2,9 @@ package com.duck.owlcctv.activity;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -38,18 +40,29 @@ public class SettingsActivity extends PreferenceActivity {
             super.onCreate(savedInstance);
             super.addPreferencesFromResource(R.xml.settings);
 
-            Preference authPref = this.findPreference("prefAuthUser");
-            authPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                final Activity activity = getActivity();
+            SharedPreferences sharedPref = getActivity().getSharedPreferences("auth", Context.MODE_PRIVATE);
+            boolean isAuthed = sharedPref.getBoolean("isAuthed", false);
 
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent intent = new Intent(activity, AuthLoginActivity.class);
-                    activity.startActivity(intent);
-                    activity.finish();
-                    return true;
-                }
-            });
+            Preference authPref = this.findPreference("prefAuthUser");
+            if (isAuthed) {
+                authPref.setSummary(R.string.settings_auth_app_checked);
+            } else {
+                authPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    final Activity activity = getActivity();
+
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        Intent intent = new Intent(activity, AuthLoginActivity.class);
+                        activity.startActivity(intent);
+                        activity.finish();
+                        return true;
+                    }
+                });
+                authPref.setSummary(R.string.settings_auth_app_unchecked);
+            }
+
+
+
         }
     }
 }

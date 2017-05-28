@@ -29,7 +29,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!-- 네비게이터 메뉴 -->
-        <activity android:name=".activity.MenuActivity">
+        <activity android:name=".activity.MenuA ctivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

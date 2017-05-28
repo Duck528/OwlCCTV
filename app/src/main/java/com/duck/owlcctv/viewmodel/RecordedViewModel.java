@@ -3,8 +3,6 @@ package com.duck.owlcctv.viewmodel;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -74,7 +72,14 @@ public class RecordedViewModel implements BaseViewModel {
                 try {
                     Date d1 = d.parse(r1.getLastModified());
                     Date d2 = d.parse(r2.getLastModified());
-                    return d1.compareTo(d2);
+                    int cmpRes = d1.compareTo(d2);
+                    if (cmpRes > 0) {
+                        return -1;
+                    } else if (cmpRes == 0) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                     return 0;

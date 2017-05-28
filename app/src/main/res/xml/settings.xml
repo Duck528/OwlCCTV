@@ -22,10 +22,9 @@
     <PreferenceCategory
         android:title="@string/settings_auth_app_title">
         <Preference
+            android:key="prefAuthUser"
             android:title="@string/settings_auth_app_title"
             android:summary="@string/settings_auth_app_unchecked">
-            <intent
-                android:action="com.duck.owlcctv.activity.AuthLoginActivity"/>
         </Preference>
     </PreferenceCategory>
 

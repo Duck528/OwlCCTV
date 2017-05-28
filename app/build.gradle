@@ -37,4 +37,7 @@ dependencies {
     compile project(':openCVLibrary320')
     compile 'org.jetbrains:annotations-java5:15.0'
     compile(name:'FFmpegAndroid-0.3.2', ext:'aar')
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    // Jackson - databind
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
 }

@@ -9,7 +9,7 @@
 - FFmpeg를 사용하여 avi 비디오를 mp4 비디오로 변환
 - MVVM 디자인패턴 적용
 
-### 디자인 패턴이 적용된 부분
+### 디자인 패턴이 적용된 부분 (State Pattern)
 ###### 경로: app/com/duck/owlcctv/viewmodel/CCTVViewModel
 
 #### UML 다이어그램

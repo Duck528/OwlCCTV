@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.ObservableField;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -17,6 +18,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+
+enum LoginResult { OK, FAIL, NO_INTERNET };
 
 public class AuthLoginViewModel implements BaseViewModel {
     private static final String TAG = "[AuthLoginViewModel]";
@@ -39,17 +43,17 @@ public class AuthLoginViewModel implements BaseViewModel {
 
     public void doLogin() {
         // API 서버로 사용자에게 입력받은 ID와 PW를 전송한다
-        Thread httpThread = new Thread(new Runnable() {
+        new AsyncTask<Void, Void, LoginResult>() {
             @Override
-            public void run() {
+            protected LoginResult doInBackground(Void... params) {
                 try {
                     final Map<String, Object> m = new HashMap<>();
-                    m.put("email", "asa9105@naver.com");
-                    m.put("password", "1234");
+                    m.put("email", userId.get());
+                    m.put("password", userPw.get());
 
                     String resp = HttpUtil.post(loginUri, m);
                     if (resp == null) {
-                        return;
+                        return LoginResult.FAIL;
                     }
                     Map<String, Object> resMap = mapper.readValue(
                             resp,
@@ -65,21 +69,36 @@ public class AuthLoginViewModel implements BaseViewModel {
                         editor.putString("password", userId.get());
                         editor.putString("token", token);
                         editor.apply();
-
-                        Intent intent = new Intent(activity, AuthCodeActivity.class);
-                        activity.startActivity(intent);
-                        activity.finish();
+                        return LoginResult.OK;
+                    } else {
+                        return LoginResult.FAIL;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    return LoginResult.FAIL;
                 }
             }
-        });
-        httpThread.start();
+
+            @Override
+            protected void onPostExecute(LoginResult result) {
+                if (result == LoginResult.OK) {
+                    Toast.makeText(activity, "인증되었습니다", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(activity, AuthCodeActivity.class);
+                    activity.startActivity(intent);
+                    activity.finish();
+                } else {
+                    Toast.makeText(activity, "인증에 실패하였습니다", Toast.LENGTH_SHORT).show();
+                    userId.set("");
+                    userPw.set("");
+                }
+            }
+        }.execute();
     }
 
     @Override
-    public void onCreate() { }
+    public void onCreate() {
+
+    }
 
     @Override
     public void onResume() { }

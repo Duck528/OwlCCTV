@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content" />
             <EditText
                 android:id="@+id/etxtId"
-                android:text="@{viewModel.userId}"
+                android:text="@={viewModel.userId}"
                 android:textAlignment="center"
                 android:layout_marginTop="10sp"
                 android:layout_marginStart="15sp"
@@ -38,7 +38,7 @@
                 android:id="@+id/etxtPw"
                 android:inputType="textPassword"
                 android:textAlignment="center"
-                android:text="@{viewModel.userPw}"
+                android:text="@={viewModel.userPw}"
                 android:layout_marginStart="15sp"
                 android:layout_marginLeft="15sp"
                 android:layout_marginEnd="15sp"

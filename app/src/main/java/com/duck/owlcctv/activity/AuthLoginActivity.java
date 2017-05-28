@@ -19,6 +19,7 @@ public class AuthLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstance);
         ActivityAuthLoginBinding binding =
                 DataBindingUtil.setContentView(this, R.layout.activity_auth_login);
+        viewModel.onCreate();
         binding.setViewModel(viewModel);
     }
 }

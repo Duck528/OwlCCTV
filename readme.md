@@ -13,7 +13,7 @@
 ###### 경로: app/com/duck/owlcctv/viewmodel/CCTVViewModel
 
 #### UML 다이어그램
-<img src="./app/imgs/state-pattern.png" height="400" width="620"/>
+<img src="./app/imgs/fixed-state.png" height="400" width="620"/>
 
 
 #### 상태 변경도

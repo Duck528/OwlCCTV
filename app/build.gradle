@@ -34,10 +34,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile project(':openCVLibrary320')
     compile 'org.jetbrains:annotations-java5:15.0'
-    compile(name:'FFmpegAndroid-0.3.2', ext:'aar')
+    compile(name: 'FFmpegAndroid-0.3.2', ext: 'aar')
+    compile project(':openCVLibrary320')
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     // Jackson - databind
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
 }
